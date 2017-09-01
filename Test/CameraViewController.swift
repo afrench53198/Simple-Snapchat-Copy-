@@ -68,9 +68,7 @@ class CameraViewController: UIViewController {
             }
         }
     }
-    
-    
-    
+     
     func setupLoginView() {
         loginView.frame.size = self.view.frame.size
         loginView.bounds.size = self.view.bounds.size

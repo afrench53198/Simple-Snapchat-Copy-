@@ -18,19 +18,18 @@ class NoMemoriesView: UIView {
     
     override init(frame: CGRect) {
       super.init(frame: frame)
-        self.frame = frame
+     
         self.backgroundColor = .white
-       self.addSubview(statment)
+        self.addSubview(statment)
         self.addSubview(sadFace)
-    
-    
-    
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
+   
     override func layoutSubviews() {
+        
         statment.frame = CGRect(x: self.bounds.origin.x + 20, y: self.bounds.origin.y + 20, width: self.bounds.width - 40, height: 60)
         statment.font = UIFont(name: "System", size: 18)
           statment.textColor = .black
@@ -41,8 +40,7 @@ class NoMemoriesView: UIView {
         let sadFaceX = statment.frame.midX - 40
         sadFace.frame = CGRect(x: sadFaceX, y: sadFaceY, width: 80, height: 80)
         sadFace.image = UIImage(named: "Emoji Copy")
-   
-    }
+       }
     
     
 

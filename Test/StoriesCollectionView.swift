@@ -9,28 +9,31 @@
 import UIKit
 
 class StoriesCollectionView: UICollectionView {
-
-    var stories: [Story] = []
     
-
+    var stories: [Story] = []
+    var associatedController: StoriesViewController?
+    
+    
+    
     func setup() {
-        //Register Nib
-        let nib = UINib(nibName: "StoryCell", bundle: nil)
+        //Register Nib and Header View
+        let nib = UINib(nibName: "StoryCellnib", bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: "Story")
+        let headerNib = UINib(nibName: "StoriesHeaderView", bundle: nil)
+        self.register(headerNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
         //Setup Layout
-        self.contentInset = UIEdgeInsetsMake(8, 0, 8, 0)
+        
+        
         
         //Set delegate and dataSource
         self.delegate = self as UICollectionViewDelegate
         self.dataSource = self as UICollectionViewDataSource
     }
-
-
 }
 
 
 extension StoriesCollectionView: UICollectionViewDataSource, UICollectionViewDelegate {
-    // MARK: - Data Source 
+    // MARK: - Data Source
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -43,6 +46,39 @@ extension StoriesCollectionView: UICollectionViewDataSource, UICollectionViewDel
         cell.configure(with: story)
         return cell
     }
-
-
+    // MARK: - Delegate
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view: UICollectionReusableView? = nil
+        
+        if kind == UICollectionElementKindSectionHeader {
+            let headerView = self.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", for: indexPath) as! StoriesHeaderView
+            
+            return headerView
+        }
+        
+        return view!
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       
+        print("Selected")
+        let item = self.dequeueReusableCell(withReuseIdentifier: "Story", for: indexPath) as! StoryCell
+        item.imageView.image = stories[indexPath.item].image
+        let selectedStory = stories[indexPath.item]
+        let storyView = associatedController?.storyView
+        storyView?.story = selectedStory
+        storyView?.imageView.image = selectedStory.image
+        associatedController?.view.addSubview(storyView!)
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        print("Deselect called")
+    }
+    
+    
+    
 }

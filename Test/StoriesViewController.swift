@@ -13,6 +13,7 @@ class StoriesViewController: UIViewController {
    
    
     var stories: [Story] = []
+    var storyView: StoryView!
     
     @IBOutlet weak var storiesCollectionView: StoriesCollectionView!
     @IBOutlet weak var newsSourceCollectionView: NewsCollectionView!
@@ -20,9 +21,18 @@ class StoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        storyView = StoryView(frame: self.view.frame)
+        
+        storiesCollectionView.associatedController = self
         storiesCollectionView.stories = self.stories
         storiesCollectionView.setup()
+    
    }
-
+    
+    override func viewDidLayoutSubviews() {
+        
+        storyView.frame = self.view.frame
+        
+    }
    
 }

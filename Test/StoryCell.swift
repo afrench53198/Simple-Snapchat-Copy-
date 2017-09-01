@@ -9,25 +9,37 @@
 import UIKit
 
 class StoryCell: UICollectionViewCell {
-
-    var duration: Int!
-
+    
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var imageView: UIImageView!
+    var duration: Int!
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+     
+    }
    
     override func awakeFromNib() {
         super.awakeFromNib()
-      }
-
-  
+     imageView.layer.cornerRadius = 10
+    }
+    
+    /// Function to fill the interface of the Collection View cell with the data from the model, and to style the cell
     func configure(with data: Story) {
-      imageView.layer.cornerRadius = 10
-      imageView.image = data.image
-      duration = data.duration
-}
-
-
-
-
-
-
+        imageView.image = data.image
+        duration = data.duration
+    }
+    
+    
+    
+    
+    
+    
 }

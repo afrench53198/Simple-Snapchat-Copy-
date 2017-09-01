@@ -293,13 +293,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sJ2-ag-HBm" firstAttribute="centerY" secondItem="5ba-40-tI8" secondAttribute="centerY" id="0o4-LL-m2h"/>
                             <constraint firstAttribute="trailing" secondItem="dnG-pt-nUS" secondAttribute="trailing" id="10j-re-jcy"/>
                             <constraint firstItem="5ba-40-tI8" firstAttribute="top" secondItem="JGc-xC-f4Y" secondAttribute="top" constant="32" id="El3-sy-eDa"/>
-                            <constraint firstAttribute="trailing" secondItem="sJ2-ag-HBm" secondAttribute="trailing" constant="32" id="W39-Ic-1XC"/>
                             <constraint firstItem="pUS-ba-ZEe" firstAttribute="top" secondItem="dnG-pt-nUS" secondAttribute="bottom" id="W3E-av-LPM"/>
                             <constraint firstItem="dnG-pt-nUS" firstAttribute="top" secondItem="JGc-xC-f4Y" secondAttribute="top" id="jm1-ZI-zHT"/>
                             <constraint firstItem="dnG-pt-nUS" firstAttribute="leading" secondItem="JGc-xC-f4Y" secondAttribute="leading" id="pnO-1v-8Za"/>
-                            <constraint firstItem="sJ2-ag-HBm" firstAttribute="top" secondItem="a1S-kq-kdr" secondAttribute="bottom" constant="32" id="v6z-Ta-jZY"/>
+                            <constraint firstAttribute="trailing" secondItem="sJ2-ag-HBm" secondAttribute="trailing" constant="32" id="prA-C8-Aqn"/>
                             <constraint firstItem="5ba-40-tI8" firstAttribute="leading" secondItem="JGc-xC-f4Y" secondAttribute="leading" constant="32" id="zij-oC-6PO"/>
                         </constraints>
                     </view>
@@ -329,17 +329,30 @@
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="69u-yI-hFW" customClass="StoriesCollectionView" customModule="Test" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="21" width="375" height="300"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="300" id="HcZ-6I-wuX"/>
                                         </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mkL-y1-wqm">
-                                            <size key="itemSize" width="375" height="77"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="itemSize" width="375" height="88"/>
+                                            <size key="headerReferenceSize" width="50" height="59"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
-                                        <cells/>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Story" id="c8h-zv-sG7" customClass="StoryCell" customModule="Test" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="59" width="375" height="88"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </view>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="Kga-gc-Czk" customClass="StoriesHeaderView" customModule="Test" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionReusableView>
                                     </collectionView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KNh-bA-6pU" customClass="NewsCollectionView" customModule="Test" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="821" width="375" height="128"/>
