@@ -12,10 +12,11 @@ class StoriesCollectionView: UICollectionView {
     
     var stories: [Story] = []
     var associatedController: StoriesViewController?
-    
+    var storyView: StoryView!
     
     
     func setup() {
+       
         //Register Nib and Header View
         let nib = UINib(nibName: "StoryCellnib", bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: "Story")
@@ -58,27 +59,19 @@ extension StoriesCollectionView: UICollectionViewDataSource, UICollectionViewDel
         }
         
         return view!
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        
-        print("Selected")
+        print("selected")
         let item = self.dequeueReusableCell(withReuseIdentifier: "Story", for: indexPath) as! StoryCell
         item.imageView.image = stories[indexPath.item].image
         let selectedStory = stories[indexPath.item]
-        let storyView = associatedController?.storyView
-        storyView?.story = selectedStory
-        storyView?.imageView.image = selectedStory.image
-        associatedController?.view.addSubview(storyView!)
-        
+        storyView = StoryView(frame: (associatedController?.view.frame)!, story: selectedStory, VC: self.associatedController!)
+        associatedController?.view.addSubview(storyView)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        
-        print("Deselect called")
-    }
-    
+       
     
     
 }

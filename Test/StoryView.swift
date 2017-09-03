@@ -11,27 +11,29 @@ import UIKit
 class StoryView: UIView {
     
     var imageView = UIImageView()
-    var saveButton: UIButton!
     var imageHandler = ImageHandler()
     var tapHandler = UITapGestureRecognizer()
     var timeLabel: UILabel!
     var timer: Timer!
-    var timerCounter = 10
+    var timerCounter: Int = 5
     var story: Story?
+    var viewController: StoriesViewController!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setup()
+        
     }
     
-    init (frame: CGRect, story: Story) {
+    // I initialize the story view with the property viewController so the referenced view controller can do the segues/preparation
+    init (frame: CGRect, story: Story, VC: StoriesViewController) {
         super.init(frame: frame)
         
+        setup()
         self.story = story
         self.timerCounter = story.duration!
         self.imageView.image = story.image
-      
+        self.viewController = VC
     }
     
     
@@ -39,57 +41,50 @@ class StoryView: UIView {
         super.init(coder: aDecoder)
     }
     
-  
-   
+    
+    
     override func layoutSubviews() {
         
         imageView.frame = self.frame
         
-        let labelFrame = CGRect(x: imageView.bounds.maxX - 32, y: imageView.bounds.origin.y + 32, width: 32, height: 32)
+        let labelFrame = CGRect(x: self.frame.maxX - 56 , y: self.frame.origin.y + 32, width: 32, height: 32)
         timeLabel.frame = labelFrame
-        
-        saveButton.frame = CGRect(x: imageView.bounds.origin.x + 32, y: imageView.bounds.maxY - 32, width: 32, height: 32)
-        
     }
+    
     
     func setup() {
         
         // Initialize and Configure Timer
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerDidFire(timer:)), userInfo: nil, repeats: true)
         
-        // Initialize and Configure save button
-        saveButton = UIButton(type: .custom)
-        saveButton.backgroundColor = .blue
-        saveButton.frame =  CGRect(x: imageView.bounds.origin.x + 32, y: imageView.bounds.maxY - 32, width: 32, height: 32)
-    
-        saveButton.setImage(#imageLiteral(resourceName: "Delete"), for: .normal)
-        imageView.addSubview(saveButton)
+        // Configure image view on which the story will be displayed
+        imageView.frame = self.frame
+        self.addSubview(imageView)
         
         // Configure timer label
-        let labelFrame = CGRect(x: imageView.bounds.maxX - 32, y: imageView.bounds.origin.y + 32, width: 32, height: 32)
+        let labelFrame = CGRect(x: self.bounds.maxX - 32 , y: self.bounds.origin.y + 32, width: 40, height: 40)
         timeLabel = UILabel(frame: labelFrame)
-        timeLabel.font = UIFont(name: "system", size: 24)
+        timeLabel.font = UIFont(name: "system", size: 40)
         timeLabel.textColor = .white
         timeLabel.textAlignment = .center
-        timeLabel.backgroundColor = .black
-        timeLabel.text = "\(story?.duration ?? 0)"
+        timeLabel.backgroundColor = .clear
+        timeLabel.text = "\(timerCounter)"
         imageView.addSubview(timeLabel)
         
-        
-       // Configure Gesture Recognizer
+        // Configure Gesture Recognizer
         tapHandler.addTarget(self, action: #selector(self.handleTap(_:)))
         self.addGestureRecognizer(tapHandler)
+        
     }
-    
+    // Tap the screen to exit story view
     func handleTap(_ sender: UITapGestureRecognizer) {
         
         timer.invalidate()
         self.removeFromSuperview()
     }
-    
+    // Updates the counter that keeps track of timer and UI
     func timerDidFire(timer: Timer) {
         
-        timerCounter = (story?.duration)!
         timerCounter -= 1
         timeLabel.text = "\(timerCounter)"
         
@@ -97,6 +92,8 @@ class StoryView: UIView {
             self.removeFromSuperview()
         }
     }
+    
+    
     
     
 }

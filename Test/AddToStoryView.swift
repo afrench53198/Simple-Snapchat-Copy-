@@ -9,7 +9,7 @@
 import UIKit
 
 class AddToStoryView: UIView {
-
+    
     
     
     var durationSlider: UISlider!
@@ -20,7 +20,7 @@ class AddToStoryView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-   
+        
         self.backgroundColor  = .white
         configureSubviews()
     }
@@ -30,10 +30,10 @@ class AddToStoryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-        
+    
     func configureSubviews() {
         
-       // Duration Slider Configuration
+        // Duration Slider Configuration
         let durationSliderFrame = CGRect(x: self.bounds.origin.x + 20 , y: self.bounds.midY, width: self.bounds.width - 40 , height: 20)
         durationSlider = UISlider(frame: durationSliderFrame)
         durationSlider.maximumValue = 10
@@ -44,10 +44,10 @@ class AddToStoryView: UIView {
         
         // Adding function that changes label text as a target
         durationSlider.addTarget(self, action: #selector(AddToStoryView.sliderValueChanged(_:)), for: .valueChanged)
-       
+        
         self.addSubview(durationSlider)
         
-       // Duration Label Configuration
+        // Duration Label Configuration
         let durationLabelFrame = CGRect(x: self.bounds.origin.x + 8, y: durationSlider.frame.minY - 32, width: self.bounds.width - 16 , height: 24)
         durationLabel = UILabel(frame: durationLabelFrame)
         durationLabel.font = UIFont(name: "system", size: 16)
@@ -55,7 +55,7 @@ class AddToStoryView: UIView {
         durationLabel.text = "Duration Time:  "
         durationLabel.textAlignment = .center
         self.addSubview(durationLabel)
- 
+        
         // Configuring the button that will trigger a segue to StoriesViewController. Target is added in PreviewViewController
         let buttonFrame = CGRect(x: self.bounds.origin.x, y: self.bounds.maxY - 48, width: self.bounds.width, height: 48)
         addToStoryButton = UIButton(type: .custom)
@@ -65,15 +65,15 @@ class AddToStoryView: UIView {
         addToStoryButton.backgroundColor = UIColor.snapChatRed()
         self.addSubview(addToStoryButton)
     }
- 
-  
     
     
     
+    
+    ///  updates the duration label with changing of the slider
     func sliderValueChanged(_ sender: UISlider) {
         duration =  Int(durationSlider.value)
         durationLabel.text = "Duration Time: \(duration!) "
-    
+        
     }
     
     

@@ -40,7 +40,9 @@ class CameraViewController: UIViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.isNavigationBarHidden = true
+        
         if loggedIn == false {
             self.view.addSubview(loginView)
             self.setupLoginView()
@@ -59,6 +61,7 @@ class CameraViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Chacking if the segue and destination VC are as expected then passing the "picture" taken to previewVC
         if segue.identifier == "ToPreview" {
             if let destination = segue.destination as? PreviewViewController {
                 destination.capturedImage = self.imageHandler.snapShot
@@ -68,7 +71,11 @@ class CameraViewController: UIViewController {
             }
         }
     }
-     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        imageHandler.snapShot = nil
+    }
+    
     func setupLoginView() {
         loginView.frame.size = self.view.frame.size
         loginView.bounds.size = self.view.bounds.size
@@ -78,19 +85,16 @@ class CameraViewController: UIViewController {
     
     
     //MARK: - IBActions
-    
-    
-    
     @IBAction func takePicture(_ sender: Any) {
         
-        // The simulator cannot take pictures, so i will call Imagehandler method to simply grab the first image available in the imageHandle's array of images
+        // The simulator cannot take pictures, so i will call Imagehandler method to simply grab a random image available in the imageHandle's array of images
         imageHandler.getImageForPicture {
             self.performSegue(withIdentifier: "ToPreview", sender: self)
         }
     }
     
     @IBAction func signInPressed(_ sender: Any) {
-        
+        // Alerts user if both text fields aren't filled in (simulating if they didn't enter the correct login credentials). Removes login view if condition is met
         if (usernameField.text?.isEmpty)! || (passwordField.text?.isEmpty)! {
             let alertController = UIAlertController(title: "Text Field Empty!", message: "Enter text in BOTH text fields", preferredStyle: .alert)
             let okButton = UIAlertAction(title: "OK", style: .default, handler: { (action) in
@@ -116,7 +120,7 @@ class CameraViewController: UIViewController {
             flashButton.setImage(UIImage(named: "Flash_off"), for: .normal)
         }
     }
-    
+    // Doesn't do anything other than changing the button picture, but would flip the camera
     @IBAction func flipCamera(_ sender: Any) {
         
         usingFrontCamera = !usingFrontCamera
@@ -128,15 +132,14 @@ class CameraViewController: UIViewController {
                 currentDevice = backCamera
             } else {
                 currentDevice = frontCamera
-                
             }
             
         }  else {
             flipCameraButton.setImage(UIImage(named: "Camera flip")
                 , for: UIControlState.normal)
         }
-
-           }
+        
+    }
     
     @IBAction func toMemories(_ sender: Any) {
         if let vc =  storyboard?.instantiateViewController(withIdentifier: "MemoriesVC") {
